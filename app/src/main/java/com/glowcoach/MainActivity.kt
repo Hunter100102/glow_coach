@@ -10,13 +10,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.glowcoach.ui.theme.GlowCoachTheme
+import kotlinx.coroutines.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             GlowCoachTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     ChatScreen()
                 }
             }
@@ -33,16 +36,29 @@ fun ChatScreen() {
         Text("GlowCoach", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
         Column(modifier = Modifier.weight(1f)) {
-            chatLog.forEach { msg -> Text("Bot: $msg", modifier = Modifier.padding(4.dp)) }
+            chatLog.forEach { msg -> Text(msg, modifier = Modifier.padding(4.dp)) }
         }
         OutlinedTextField(value = message, onValueChange = { message = it }, label = { Text("Say something...") })
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = {
-            chatLog = chatLog + message + " (response coming soon...)"
-            message = ""
+            val userMessage = "You: $message"
+            chatLog = chatLog + userMessage
+            val url = URL("http://10.0.2.2:3000/chat")
+            CoroutineScope(Dispatchers.IO).launch {
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json; utf-8")
+                connection.doOutput = true
+                connection.outputStream.write("{\"message\": \"$message\"}".toByteArray())
+                val response = connection.inputStream.bufferedReader().readText()
+                val reply = response.substringAfter("reply":"").substringBefore(""}")
+                withContext(Dispatchers.Main) {
+                    chatLog = chatLog + "GlowCoach: $reply"
+                    message = ""
+                }
+            }
         }) {
             Text("Send")
         }
     }
 }
-    

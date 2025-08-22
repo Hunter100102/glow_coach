@@ -24,4 +24,3 @@ fun GlowCoachTheme(content: @Composable () -> Unit) {
         content = content
     )
 }
-    

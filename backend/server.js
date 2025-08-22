@@ -14,18 +14,21 @@ app.use(bodyParser.json());
 app.post('/chat', async (req, res) => {
     const { message } = req.body;
 
-    const response = await fetch('http://localhost:11434/api/generate', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        },
         body: JSON.stringify({
-            model: "phi3",
-            prompt: message,
-            stream: false
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: message }]
         })
     });
+
     const data = await response.json();
-    res.json({ reply: data.response || "Sorry, I couldn't process that." });
+    const reply = data.choices?.[0]?.message?.content || "I'm here for you!";
+    res.json({ reply });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    
