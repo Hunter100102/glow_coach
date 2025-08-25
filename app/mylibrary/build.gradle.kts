@@ -34,4 +34,5 @@ android {
 
 dependencies {
     // No external deps; keep it simple
+    implementation(project(":mylibrary"))
 }
