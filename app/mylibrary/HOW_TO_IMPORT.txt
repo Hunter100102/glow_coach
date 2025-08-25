@@ -1,0 +1,4 @@
+
+// In your project's settings.gradle(.kts) add:
+// include(":mylibrary")
+// project(":mylibrary").projectDir = File(settingsDir, "mylibrary")
