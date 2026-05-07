@@ -4,7 +4,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    // Pin plugin versions here so module build files don't need versions inline
     plugins {
         id("com.android.application") version "8.5.2"
         id("com.android.library") version "8.5.2"
@@ -21,6 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "glow_coach"
-
-// Make sure modules are included at the ROOT level (not app/mylibrary)
-include(":app", ":mylibrary")
+include(":mylibrary")
+project(":mylibrary").projectDir = file("../mylibrary")
