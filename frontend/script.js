@@ -1,4 +1,4 @@
-const API_URL = "https://glow-coach.onrender.com/api/chat";
+const API_URL = "https://glow-coach.onrender.com/chat";
 
 const form = document.getElementById("chat-form");
 const input = document.getElementById("message-input");
