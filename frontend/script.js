@@ -1,13 +1,19 @@
-const API_URL = "https://glow-coach.onrender.com/chat";
+const API_URL = "https://glow-coach.onrender.com/api/chat";
 
 const form = document.getElementById("chat-form");
 const input = document.getElementById("message-input");
 const chatBox = document.getElementById("chat-box");
 
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function addMessage(sender, text, className) {
   const div = document.createElement("div");
   div.className = `message ${className}`;
-  div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  div.innerHTML = `<strong>${escapeHtml(sender)}:</strong> ${escapeHtml(text)}`;
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
@@ -20,30 +26,26 @@ form.addEventListener("submit", async (e) => {
 
   addMessage("You", message, "user");
   input.value = "";
+  addMessage("GlowCoach", "Thinking...", "coach");
 
   try {
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: message
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
     });
 
     const data = await response.json();
+    chatBox.lastChild.remove();
 
-    addMessage(
-      "GlowCoach",
-      data.reply || "I’m here for you.",
-      "coach"
-    );
+    if (!response.ok) {
+      addMessage("GlowCoach", data.error || "Backend error.", "coach");
+      return;
+    }
+
+    addMessage("GlowCoach", data.reply || "I’m here for you.", "coach");
   } catch (error) {
-    addMessage(
-      "GlowCoach",
-      "I couldn’t connect to the backend.",
-      "coach"
-    );
+    chatBox.lastChild.remove();
+    addMessage("GlowCoach", "I couldn’t connect to the backend. Check your Render URL and redeploy.", "coach");
   }
 });

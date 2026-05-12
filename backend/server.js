@@ -22,7 +22,14 @@ app.get('/', (req, res) => {
   res.json({ ok: true, app: 'GlowCoach backend running' });
 });
 
-app.post('/chat', async (req, res) => {
+app.get(['/chat', '/api/chat'], (req, res) => {
+  res.json({
+    ok: true,
+    message: 'GlowCoach chat route is live. Send a POST request with JSON: { "message": "Hello" }'
+  });
+});
+
+async function handleChat(req, res) {
   try {
     const { message } = req.body || {};
 
@@ -32,7 +39,7 @@ app.post('/chat', async (req, res) => {
 
     if (!process.env.OPENAI_API_KEY) {
       return res.status(500).json({
-        error: 'Missing OPENAI_API_KEY in backend .env file.'
+        error: 'Missing OPENAI_API_KEY in Render environment variables.'
       });
     }
 
@@ -67,6 +74,9 @@ app.post('/chat', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'GlowCoach had trouble replying.' });
   }
-});
+}
+
+app.post('/chat', handleChat);
+app.post('/api/chat', handleChat);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
