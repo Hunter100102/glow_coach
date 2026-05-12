@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/glow_coach.iml" filepath="$PROJECT_DIR$/glow_coach.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Glow Coach.iml" filepath="$PROJECT_DIR$/.idea/Glow Coach.iml" />
     </modules>
   </component>
 </project>
