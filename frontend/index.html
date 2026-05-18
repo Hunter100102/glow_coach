@@ -4,32 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GlowCoach</title>
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
     <header>
-      <h1>GlowCoach</h1>
-      <p>Your motivational AI partner.</p>
+      <div>
+        <h1>GlowCoach</h1>
+        <p id="subtitle">Your motivational AI partner.</p>
+      </div>
+      <button id="logout-btn" class="ghost hidden">Logout</button>
     </header>
 
-    <main id="chat-box">
-      <div class="message coach">
-        <strong>GlowCoach:</strong>
-        Hey, I’m GlowCoach. Tell me what you're trying to improve right now.
-      </div>
-    </main>
+    <section id="auth-screen" class="auth-card">
+      <h2>Welcome to GlowCoach</h2>
+      <p>Create an account so GlowCoach can learn you over time.</p>
 
-    <form id="chat-form">
-      <input
-        type="text"
-        id="message-input"
-        placeholder="Type your message..."
-        autocomplete="off"
-        required
-      />
-      <button type="submit">Send</button>
-    </form>
+      <input id="name" type="text" placeholder="Name" />
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password, 8+ characters" />
+
+      <button id="register-btn">Create Account</button>
+      <button id="login-btn" class="secondary">Log In</button>
+
+      <p class="hint">Use the same email later and GlowCoach will remember your chats, goals, and preferences.</p>
+      <p id="auth-error" class="error"></p>
+    </section>
+
+    <main id="chat-screen" class="hidden">
+      <section id="memory-panel">
+        <h3>Your Growth Profile</h3>
+        <p id="profile-summary">GlowCoach will build this as you chat.</p>
+      </section>
+
+      <section id="chat-box">
+        <div class="message coach">
+          <strong>GlowCoach:</strong>
+          Hey, I’m GlowCoach. Tell me what you're trying to improve right now — money, confidence, discipline, health, or life in general?
+        </div>
+      </section>
+
+      <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Text GlowCoach..." autocomplete="off" required />
+        <button type="submit">Send</button>
+      </form>
+    </main>
   </div>
 
   <script src="script.js"></script>
