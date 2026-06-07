@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlowCoach</title>
+  <meta name="theme-color" content="#ffd166" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h1>GlowCoach</h1>
+        <p id="subtitle">Your motivational AI partner.</p>
+      </div>
+      <button id="logout-btn" class="ghost hidden">Logout</button>
+    </header>
+
+    <section id="auth-screen" class="card auth-card">
+      <h2>Build your life with a coach that remembers you.</h2>
+      <p>Create an account so GlowCoach can learn your goals, preferences, and progress over time.</p>
+
+      <label>Name</label>
+      <input id="name" type="text" placeholder="William" />
+
+      <label>Email</label>
+      <input id="email" type="email" placeholder="you@email.com" />
+
+      <label>Password</label>
+      <input id="password" type="password" placeholder="At least 8 characters" />
+
+      <div class="button-row">
+        <button id="register-btn">Create Account</button>
+        <button id="login-btn" class="secondary">Log In</button>
+      </div>
+
+      <p class="hint">Early MVP: don’t enter sensitive personal information yet.</p>
+      <p id="auth-error" class="error"></p>
+    </section>
+
+    <section id="onboarding-screen" class="card hidden">
+      <h2>Let GlowCoach learn your starting point</h2>
+      <p>This helps personalize your coaching from the first conversation.</p>
+
+      <label>Main goal</label>
+      <input id="main-goal" type="text" placeholder="Example: Build my business and confidence" />
+
+      <label>Biggest struggle right now</label>
+      <input id="struggle" type="text" placeholder="Example: Staying consistent" />
+
+      <label>Preferred coaching style</label>
+      <select id="style">
+        <option value="Direct but encouraging">Direct but encouraging</option>
+        <option value="Gentle and supportive">Gentle and supportive</option>
+        <option value="High-energy accountability">High-energy accountability</option>
+        <option value="Strategic and practical">Strategic and practical</option>
+      </select>
+
+      <label>Primary focus area</label>
+      <select id="focus-area">
+        <option value="Money and business">Money and business</option>
+        <option value="Confidence and self-esteem">Confidence and self-esteem</option>
+        <option value="Health and energy">Health and energy</option>
+        <option value="Discipline and habits">Discipline and habits</option>
+        <option value="Relationships and communication">Relationships and communication</option>
+      </select>
+
+      <button id="save-onboarding-btn">Start Coaching</button>
+      <button id="skip-onboarding-btn" class="link-button">Skip for now</button>
+      <p id="onboarding-error" class="error"></p>
+    </section>
+
+    <main id="chat-screen" class="hidden">
+      <section class="dashboard">
+        <div class="mini-card">
+          <h3>Growth Profile</h3>
+          <p id="profile-summary">GlowCoach will build this as you chat.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Quick Check-In</h3>
+          <div class="checkin-grid">
+            <select id="mood">
+              <option value="">Mood</option>
+              <option>Good</option>
+              <option>Okay</option>
+              <option>Stressed</option>
+              <option>Low</option>
+              <option>Motivated</option>
+            </select>
+            <select id="energy">
+              <option value="">Energy</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+            <select id="focus">
+              <option value="">Focus</option>
+              <option>Sharp</option>
+              <option>Scattered</option>
+              <option>Need direction</option>
+            </select>
+          </div>
+          <input id="checkin-note" type="text" placeholder="Optional note..." />
+          <button id="checkin-btn" class="small-button">Save Check-In</button>
+          <p id="checkin-status" class="hint"></p>
+        </div>
+      </section>
+
+      <section id="chat-box">
+        <div class="message coach">
+          GlowCoach: Hey, I’m GlowCoach. Tell me what you're trying to improve right now — money, confidence, discipline, health, or life in general?
+        </div>
+      </section>
+
+      <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Text GlowCoach..." autocomplete="off" required />
+        <button type="submit">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

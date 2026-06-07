@@ -1,0 +1,10 @@
+{
+  "name": "GlowCoach",
+  "short_name": "GlowCoach",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101828",
+  "theme_color": "#ffd166",
+  "description": "Your motivational AI life partner.",
+  "icons": []
+}
